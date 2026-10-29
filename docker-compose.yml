@@ -1,0 +1,33 @@
+version: '3.8'
+
+services:
+  octosql:
+    build: .
+    container_name: octosql_db
+    ports:
+      - "8421:8421"
+    environment:
+      - OCTOSQL_PORT=8421
+      - OCTOSQL_HOST=0.0.0.0
+      - OCTOSQL_MASTER_KEY=OctoSQL-Secure-Production-Key-2026
+      - OCTOSQL_ALLOWED_IPS=127.0.0.1,::1,localhost,172.16.0.0/12
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+    volumes:
+      - octosql_data:/app/data
+    depends_on:
+      - redis
+    restart: always
+
+  redis:
+    image: redis:7-alpine
+    container_name: octosql_redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    restart: always
+
+volumes:
+  octosql_data:
+  redis_data:

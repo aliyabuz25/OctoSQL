@@ -1,0 +1,1125 @@
+<!DOCTYPE html>
+<html lang="az">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>OctoAdminer / OctoSQL 127.0.0.1:8421 / octosql_db</title>
+  
+  <style>
+    /* Classic Legacy Database Workbench CSS Stylesheet */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Tahoma, Arial, sans-serif;
+      font-size: 12px;
+      line-height: 1.5;
+      color: #333333;
+      background-color: #f3f3f3;
+      overflow-x: hidden;
+    }
+    a {
+      color: #235a81;
+      text-decoration: none;
+    }
+    a:hover {
+      text-decoration: underline;
+      color: #1a425f;
+    }
+
+    /* Legacy 16x16 Pixel-Crisp Icons */
+    .legacy-icon {
+      display: inline-block;
+      width: 16px;
+      height: 16px;
+      vertical-align: -3px;
+      flex-shrink: 0;
+    }
+
+    /* Top Masthead Header */
+    #pma-header {
+      background: #ffffff;
+      border-bottom: 1px solid #dcdcdc;
+      height: 48px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 15px;
+    }
+    .pma-brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .pma-logo-img {
+      height: 28px;
+      display: flex;
+      align-items: center;
+      font-family: "Trebuchet MS", "Lucida Grande", Tahoma, sans-serif;
+      font-size: 21px;
+      font-weight: bold;
+      color: #0b2e59;
+      letter-spacing: -0.5px;
+    }
+    .pma-logo-img span.brand-accent {
+      color: #e06800;
+    }
+    .pma-version-pill {
+      font-size: 10px;
+      color: #555;
+      background: #edf2f7;
+      padding: 1px 6px;
+      border-radius: 3px;
+      border: 1px solid #ccd8e4;
+      font-family: monospace;
+      font-weight: 600;
+    }
+
+    /* Top Tools Nav */
+    .pma-top-tools {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+    .pma-tool-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      color: #444;
+      font-size: 11px;
+      padding: 4px 8px;
+      background: #fafafa;
+      border: 1px solid #ccc;
+      border-radius: 2px;
+      cursor: pointer;
+    }
+    .pma-tool-btn:hover {
+      background: #eee;
+      text-decoration: none;
+    }
+
+    /* Server Breadcrumbs Bar */
+    #pma-breadcrumbs {
+      background: #f7f7f7;
+      border-bottom: 1px solid #d3d3d3;
+      padding: 6px 15px;
+      font-size: 12px;
+      color: #555;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .breadcrumb-sep {
+      color: #888;
+      font-size: 10px;
+    }
+
+    /* Main Container Layout */
+    #pma-container {
+      display: flex;
+      min-height: calc(100vh - 78px);
+    }
+
+    /* Left Navigation Panel (Tree Sidebar) */
+    #pma-nav-panel {
+      width: 250px;
+      min-width: 250px;
+      background: #fbfbfb;
+      border-right: 1px solid #d3d3d3;
+      display: flex;
+      flex-direction: column;
+    }
+    .nav-panel-header {
+      background: #e8ecf1;
+      border-bottom: 1px solid #d3d3d3;
+      padding: 6px 10px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .nav-panel-icons {
+      display: flex;
+      gap: 5px;
+    }
+    .nav-icon-btn {
+      width: 22px;
+      height: 22px;
+      border: 1px solid #bbb;
+      background: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 2px;
+      cursor: pointer;
+      color: #444;
+    }
+    .nav-icon-btn:hover {
+      background: #eee;
+    }
+    .nav-filter-box {
+      padding: 6px 10px;
+      border-bottom: 1px solid #e2e2e2;
+      background: #f3f3f3;
+    }
+    .nav-filter-input {
+      width: 100%;
+      padding: 4px 6px;
+      font-size: 11px;
+      border: 1px solid #aaa;
+      border-radius: 2px;
+    }
+
+    /* Tree View */
+    .pma-tree {
+      padding: 8px 0;
+      flex: 1;
+      overflow-y: auto;
+    }
+    .tree-db-header {
+      padding: 5px 10px;
+      font-weight: bold;
+      color: #235a81;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      cursor: pointer;
+    }
+    .tree-db-header:hover {
+      background: #e8ecf1;
+    }
+    .tree-table-list {
+      list-style: none;
+      margin-left: 12px;
+      padding: 0;
+    }
+    .tree-table-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 4px 10px;
+      font-size: 11px;
+      color: #333;
+    }
+    .tree-table-item:hover {
+      background: #eef2f7;
+    }
+    .tree-table-item.active {
+      background: #dfe8f2;
+      font-weight: bold;
+    }
+    .tree-table-name {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      color: inherit;
+      text-decoration: none;
+    }
+    .tree-table-count {
+      color: #777;
+      font-size: 10px;
+    }
+
+    /* Right Main Viewport */
+    #pma-content {
+      flex: 1;
+      background: #ffffff;
+      padding: 15px 20px;
+      overflow-y: auto;
+    }
+
+    /* Navigation Tabs Bar */
+    .pma-tabs {
+      display: flex;
+      border-bottom: 1px solid #c2c2c2;
+      margin-bottom: 15px;
+      background: #f9f9f9;
+      padding: 0 10px;
+      gap: 2px;
+    }
+    .pma-tab {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 7px 14px;
+      font-size: 12px;
+      color: #333;
+      text-decoration: none;
+      border: 1px solid transparent;
+      border-bottom: none;
+      border-top-left-radius: 3px;
+      border-top-right-radius: 3px;
+      margin-bottom: -1px;
+    }
+    .pma-tab:hover {
+      background: #f0f0f0;
+      color: #000;
+      text-decoration: none;
+    }
+    .pma-tab.active {
+      background: #ffffff;
+      border-color: #c2c2c2;
+      border-bottom: 1px solid #ffffff;
+      font-weight: bold;
+      color: #235a81;
+    }
+
+    /* Success / Info / Alert Notices */
+    .pma-notice {
+      padding: 10px 14px;
+      margin-bottom: 14px;
+      border-radius: 3px;
+      font-size: 12px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .pma-notice-success {
+      background: #e6f6e8;
+      border: 1px solid #6ed17d;
+      color: #1f6b2b;
+    }
+    .pma-notice-error {
+      background: #fbeae8;
+      border: 1px solid #e07f77;
+      color: #9c271d;
+    }
+    .pma-notice-info {
+      background: #ebf3fb;
+      border: 1px solid #9fc1e8;
+      color: #1c528f;
+    }
+
+    /* Query Box */
+    .pma-query-box {
+      border: 1px solid #ccd8e4;
+      background: #f6f9fc;
+      padding: 10px 12px;
+      font-family: Consolas, "Courier New", monospace;
+      font-size: 12px;
+      color: #002b66;
+      border-radius: 2px;
+      margin-bottom: 15px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    /* Classic Data Table */
+    .pma-table {
+      width: 100%;
+      border-collapse: collapse;
+      border: 1px solid #d3d3d3;
+      margin-bottom: 15px;
+      font-size: 12px;
+    }
+    .pma-table th {
+      background: #e8ecf1;
+      background: linear-gradient(to bottom, #f2f5f8 0%, #e1e7ed 100%);
+      border: 1px solid #c2c2c2;
+      padding: 6px 8px;
+      text-align: left;
+      font-weight: bold;
+      color: #333;
+    }
+    .pma-table td {
+      border: 1px solid #e0e0e0;
+      padding: 5px 8px;
+      vertical-align: middle;
+    }
+    .pma-table tr:nth-child(even) {
+      background-color: #fbfbfb;
+    }
+    .pma-table tr:hover {
+      background-color: #eef4fc;
+    }
+
+    /* Table Action Links */
+    .pma-action-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 2px 6px;
+      border-radius: 2px;
+      font-size: 11px;
+      text-decoration: none;
+      border: 1px solid transparent;
+    }
+    .pma-action-edit {
+      color: #1a568c;
+      background: #f2f6fa;
+      border-color: #c9d8e7;
+    }
+    .pma-action-edit:hover {
+      background: #dfe9f4;
+    }
+    .pma-action-del {
+      color: #b72b2b;
+      background: #fdf2f2;
+      border-color: #f0c3c3;
+    }
+    .pma-action-del:hover {
+      background: #fbe0e0;
+    }
+
+    /* Form Elements */
+    .pma-btn {
+      padding: 5px 12px;
+      font-size: 12px;
+      font-weight: 500;
+      color: #333;
+      background: #f4f4f4;
+      background: linear-gradient(to bottom, #ffffff 0%, #e6e6e6 100%);
+      border: 1px solid #aaa;
+      border-radius: 2px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+    }
+    .pma-btn:hover {
+      background: #e0e0e0;
+      border-color: #888;
+    }
+    .pma-btn-primary {
+      color: #ffffff;
+      background: #2f6594;
+      background: linear-gradient(to bottom, #3979b0 0%, #25527a 100%);
+      border-color: #1d4366;
+    }
+    .pma-btn-primary:hover {
+      background: #25527a;
+    }
+
+    .pma-input, .pma-select, .pma-textarea {
+      padding: 5px 8px;
+      font-size: 12px;
+      border: 1px solid #aaa;
+      border-radius: 2px;
+      background: #fff;
+    }
+    .pma-input:focus, .pma-textarea:focus {
+      border-color: #2f6594;
+      outline: none;
+    }
+
+    /* Footer Toolbar */
+    .pma-bottom-bar {
+      padding: 8px 10px;
+      background: #f3f3f3;
+      border: 1px solid #d3d3d3;
+      border-top: none;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 11px;
+    }
+
+    /* Badge */
+    .pma-badge-white {
+      display: inline-block;
+      min-width: 18px;
+      height: 18px;
+      line-height: 16px;
+      text-align: center;
+      border-radius: 9px;
+      font-size: 10px;
+      font-weight: bold;
+      background: #ffffff;
+      color: #000000;
+      border: 1px solid #aaa;
+      padding: 0 4px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Hidden SVG Sprite of Legacy 16x16 Pixel-Perfect Icons (Silk & FamFamFam style) -->
+  <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+    <!-- Server Icon -->
+    <symbol id="icon-server" viewBox="0 0 16 16">
+      <rect x="2" y="2" width="12" height="4" rx="1" fill="#c3cdd7" stroke="#3b5266" stroke-width="1.2"/>
+      <circle cx="4.5" cy="4" r="0.8" fill="#32cd32"/>
+      <circle cx="7" cy="4" r="0.8" fill="#4682b4"/>
+      <rect x="2" y="7" width="12" height="4" rx="1" fill="#c3cdd7" stroke="#3b5266" stroke-width="1.2"/>
+      <circle cx="4.5" cy="9" r="0.8" fill="#32cd32"/>
+      <circle cx="7" cy="9" r="0.8" fill="#4682b4"/>
+      <rect x="2" y="12" width="12" height="3" rx="1" fill="#a8b5c2" stroke="#3b5266" stroke-width="1.2"/>
+      <circle cx="4.5" cy="13.5" r="0.8" fill="#ffa500"/>
+    </symbol>
+
+    <!-- Database Cylinder Icon -->
+    <symbol id="icon-database" viewBox="0 0 16 16">
+      <ellipse cx="8" cy="3.5" rx="6" ry="2" fill="#5b9bd5" stroke="#1f4e78" stroke-width="1.2"/>
+      <path d="M2 3.5 v4 c0 1.1 2.7 2 6 2 s6 -0.9 6 -2 v-4" fill="#41719c" stroke="#1f4e78" stroke-width="1.2"/>
+      <ellipse cx="8" cy="7.5" rx="6" ry="2" fill="#5b9bd5" stroke="#1f4e78" stroke-width="1.2"/>
+      <path d="M2 7.5 v4 c0 1.1 2.7 2 6 2 s6 -0.9 6 -2 v-4" fill="#2f5597" stroke="#1f4e78" stroke-width="1.2"/>
+      <ellipse cx="8" cy="11.5" rx="6" ry="2" fill="#5b9bd5" stroke="#1f4e78" stroke-width="1.2"/>
+    </symbol>
+
+    <!-- Table Grid Icon -->
+    <symbol id="icon-table" viewBox="0 0 16 16">
+      <rect x="1.5" y="2" width="13" height="12" rx="1" fill="#ffffff" stroke="#2b5b84" stroke-width="1.2"/>
+      <path d="M1.5 5.5 h13" stroke="#2b5b84" stroke-width="1.2"/>
+      <path d="M1.5 9.5 h13" stroke="#9bb6cb" stroke-width="1"/>
+      <path d="M6 5.5 v8.5" stroke="#9bb6cb" stroke-width="1"/>
+      <path d="M10.5 5.5 v8.5" stroke="#9bb6cb" stroke-width="1"/>
+      <rect x="2" y="2.5" width="12" height="2.5" fill="#508bb8"/>
+    </symbol>
+
+    <!-- Table Add Icon -->
+    <symbol id="icon-table-add" viewBox="0 0 16 16">
+      <rect x="1" y="2" width="11" height="10" rx="1" fill="#ffffff" stroke="#2b5b84" stroke-width="1"/>
+      <path d="M1 5 h11" stroke="#2b5b84" stroke-width="1"/>
+      <rect x="1.5" y="2.5" width="10" height="2" fill="#508bb8"/>
+      <circle cx="12" cy="12" r="3.5" fill="#28a745" stroke="#ffffff" stroke-width="0.8"/>
+      <path d="M12 10.5 v3 M10.5 12 h3" stroke="#ffffff" stroke-width="1.2" stroke-linecap="round"/>
+    </symbol>
+
+    <!-- Document / Browse Icon -->
+    <symbol id="icon-browse" viewBox="0 0 16 16">
+      <path d="M3 1.5 h7 l4 4 v9 h-11 z" fill="#fdfdfd" stroke="#555555" stroke-width="1.2"/>
+      <path d="M10 1.5 v4 h4" fill="#d9d9d9" stroke="#555555" stroke-width="1.2"/>
+      <line x1="5" y1="7" x2="11" y2="7" stroke="#2b5b84" stroke-width="1.2"/>
+      <line x1="5" y1="9.5" x2="11" y2="9.5" stroke="#2b5b84" stroke-width="1.2"/>
+      <line x1="5" y1="12" x2="9" y2="12" stroke="#2b5b84" stroke-width="1.2"/>
+    </symbol>
+
+    <!-- Structure / Calipers Icon -->
+    <symbol id="icon-structure" viewBox="0 0 16 16">
+      <rect x="2" y="2" width="12" height="12" rx="1" fill="#fffbe6" stroke="#b78103" stroke-width="1.2"/>
+      <line x1="2" y1="5" x2="14" y2="5" stroke="#b78103" stroke-width="1"/>
+      <line x1="6" y1="5" x2="6" y2="14" stroke="#b78103" stroke-width="1"/>
+      <circle cx="4" cy="3.5" r="0.7" fill="#b78103"/>
+      <circle cx="8" cy="3.5" r="0.7" fill="#b78103"/>
+      <circle cx="12" cy="3.5" r="0.7" fill="#b78103"/>
+    </symbol>
+
+    <!-- Lightning / SQL Icon -->
+    <symbol id="icon-sql" viewBox="0 0 16 16">
+      <path d="M9.5 1 L3.5 8 h4.5 L6 15 l7.5 -8.5 h-4.5 z" fill="#f5b025" stroke="#ab6b00" stroke-width="1.1" stroke-linejoin="round"/>
+    </symbol>
+
+    <!-- Insert / Plus Icon -->
+    <symbol id="icon-insert" viewBox="0 0 16 16">
+      <rect x="2" y="3" width="12" height="10" rx="1" fill="#f6fff6" stroke="#2e7d32" stroke-width="1.2"/>
+      <line x1="2" y1="6" x2="14" y2="6" stroke="#2e7d32" stroke-width="1"/>
+      <circle cx="8" cy="9.5" r="2.8" fill="#2e7d32"/>
+      <path d="M8 8 v3 M6.5 9.5 h3" stroke="#ffffff" stroke-width="1.1" stroke-linecap="round"/>
+    </symbol>
+
+    <!-- Gear / Operations Icon -->
+    <symbol id="icon-gear" viewBox="0 0 16 16">
+      <circle cx="8" cy="8" r="5" fill="#8898aa" stroke="#445566" stroke-width="1.2"/>
+      <circle cx="8" cy="8" r="2" fill="#ffffff" stroke="#445566" stroke-width="1"/>
+      <path d="M8 1 v2 M8 13 v2 M1 8 h2 M13 8 h2 M3 3 l1.5 1.5 M11.5 11.5 l1.5 1.5 M3 13 l1.5 -1.5 M11.5 4.5 l1.5 -1.5" stroke="#445566" stroke-width="1.8" stroke-linecap="round"/>
+    </symbol>
+
+    <!-- Edit Pencil Icon -->
+    <symbol id="icon-edit" viewBox="0 0 16 16">
+      <path d="M11 2 l3 3 l-9 9 h-3 v-3 z" fill="#ffc107" stroke="#8d6e00" stroke-width="1.1"/>
+      <path d="M2 14 l1 -3 l2 2 z" fill="#333"/>
+      <path d="M10 3 l3 3" stroke="#8d6e00" stroke-width="1"/>
+    </symbol>
+
+    <!-- Delete / Trash Cross Icon -->
+    <symbol id="icon-delete" viewBox="0 0 16 16">
+      <circle cx="8" cy="8" r="6" fill="#e53935" stroke="#9a1310" stroke-width="1.1"/>
+      <path d="M5.5 5.5 l5 5 M10.5 5.5 l-5 5" stroke="#ffffff" stroke-width="1.4" stroke-linecap="round"/>
+    </symbol>
+
+    <!-- Home Icon -->
+    <symbol id="icon-home" viewBox="0 0 16 16">
+      <path d="M8 2 L1.5 7.5 h2 v6 h9 v-6 h2 z" fill="#3f729b" stroke="#1d4463" stroke-width="1.1"/>
+      <rect x="6.5" y="8.5" width="3" height="5" fill="#ffffff"/>
+    </symbol>
+
+    <!-- Refresh Icon -->
+    <symbol id="icon-refresh" viewBox="0 0 16 16">
+      <path d="M13.5 8 a5.5 5.5 0 1 1 -1.5 -3.8 l1.5 -1.5 v4 h-4 l1.6 -1.6 a4 4 0 1 0 1.2 2.9 z" fill="#28a745"/>
+    </symbol>
+
+    <!-- Key Icon (PK) -->
+    <symbol id="icon-key" viewBox="0 0 16 16">
+      <circle cx="5" cy="6" r="3.5" fill="#e6b800" stroke="#8c6f00" stroke-width="1.1"/>
+      <circle cx="5" cy="6" r="1.3" fill="#ffffff"/>
+      <path d="M7.8 7.8 l6 6 v2 h-2 v-1 h-1 v-1 h-1 l-2 -2" fill="#e6b800" stroke="#8c6f00" stroke-width="1.1" stroke-linejoin="round"/>
+    </symbol>
+
+    <!-- Checkmark Success Icon -->
+    <symbol id="icon-tick" viewBox="0 0 16 16">
+      <circle cx="8" cy="8" r="6.5" fill="#28a745" stroke="#19692c" stroke-width="1.1"/>
+      <path d="M5 8.2 l2 2 l4 -4.5" fill="none" stroke="#ffffff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+    </symbol>
+
+    <!-- Back Arrow Icon -->
+    <symbol id="icon-back" viewBox="0 0 16 16">
+      <path d="M13 8 H3 M7 4 L3 8 l4 4" fill="none" stroke="#444444" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+    </symbol>
+  </svg>
+
+  <!-- 1. Top Masthead Header -->
+  <header id="pma-header">
+    <div class="pma-brand">
+      <div class="pma-logo-img">
+        <svg class="legacy-icon" style="width: 20px; height: 20px; margin-right: 6px;"><use href="#icon-database"/></svg>
+        <span>Octo</span><span class="brand-accent">Adminer</span>
+      </div>
+      <span style="font-size: 11px; color: #666; margin-left: 10px;">
+        Server: <strong>127.0.0.1:8421</strong>
+      </span>
+    </div>
+
+    <!-- Top Tools -->
+    <div class="pma-top-tools">
+      <span style="font-size: 11px; color: #555;">
+        IP: <strong><%= clientIp %></strong>
+      </span>
+      <span style="font-size: 11px; color: #555;">
+        Keş: <strong><%= cacheStats.driver %></strong>
+      </span>
+    </div>
+  </header>
+
+  <!-- 2. Server Breadcrumbs Bar -->
+  <div id="pma-breadcrumbs">
+    <svg class="legacy-icon"><use href="#icon-server"/></svg>
+    <span>Server: <strong>127.0.0.1</strong></span>
+    <span class="breadcrumb-sep">&raquo;</span>
+    <svg class="legacy-icon"><use href="#icon-database"/></svg>
+    <span>Baza: <strong>octosql_db</strong></span>
+    <% if (activeTable) { %>
+      <span class="breadcrumb-sep">&raquo;</span>
+      <svg class="legacy-icon"><use href="#icon-table"/></svg>
+      <span>Cədvəl: <strong><%= activeTable %></strong></span>
+    <% } %>
+  </div>
+
+  <!-- 3. Main Container Layout -->
+  <div id="pma-container">
+    
+    <!-- Left Panel (Sidebar Tree) -->
+    <aside id="pma-nav-panel">
+      
+      <!-- Panel Header Buttons -->
+      <div class="nav-panel-header">
+        <span style="font-weight: bold; font-size: 11px; color: #444;">Naviqasiya</span>
+        <div class="nav-panel-icons">
+          <a href="/admin" class="nav-icon-btn" title="Ana Səhifə">
+            <svg class="legacy-icon" style="width: 13px; height: 13px;"><use href="#icon-home"/></svg>
+          </a>
+          <a href="/admin" class="nav-icon-btn" title="Yenilə">
+            <svg class="legacy-icon" style="width: 13px; height: 13px;"><use href="#icon-refresh"/></svg>
+          </a>
+        </div>
+      </div>
+
+      <!-- Quick Filter Search -->
+      <div class="nav-filter-box">
+        <input type="text" id="nav-table-filter" placeholder="Cədvəlləri filtrlə..." class="nav-filter-input" onkeyup="filterTables()">
+      </div>
+
+      <!-- Database Tree -->
+      <div class="pma-tree">
+        <div class="tree-db-header">
+          <svg class="legacy-icon"><use href="#icon-database"/></svg>
+          <span><strong>octosql_db</strong></span>
+          <span class="pma-badge-white"><%= tables.length %></span>
+        </div>
+
+        <ul class="tree-table-list" id="table-tree-ul">
+          <% tables.forEach(t => { %>
+            <li class="tree-table-item <%= activeTable === t.name ? 'active' : '' %>" data-name="<%= t.name.toLowerCase() %>">
+              <a href="/admin?table=<%= t.name %>&tab=browse" class="tree-table-name">
+                <svg class="legacy-icon"><use href="#icon-table"/></svg>
+                <span><%= t.name %></span>
+              </a>
+              <span class="tree-table-count">(<%= t.rows %>)</span>
+            </li>
+          <% }) %>
+        </ul>
+
+        <!-- Create New Table Quick Form -->
+        <div style="padding: 12px 10px; border-top: 1px solid #e0e0e0; margin-top: 10px;">
+          <div style="font-size: 11px; font-weight: bold; color: #555; margin-bottom: 6px; display: flex; align-items: center; gap: 4px;">
+            <svg class="legacy-icon"><use href="#icon-table-add"/></svg>
+            <span>Yeni Cədvəl Yarat</span>
+          </div>
+          <form action="/admin/table/create" method="POST" style="display: flex; flex-direction: column; gap: 4px;">
+            <input type="text" name="new_table_name" placeholder="Cədvəl adı" required class="pma-input" style="font-size: 11px;">
+            <input type="text" name="columns_str" placeholder="id:INTEGER, name:TEXT, price:FLOAT" required class="pma-input" style="font-size: 11px;">
+            <button type="submit" class="pma-btn" style="font-size: 11px; padding: 3px 6px;">Yarat</button>
+          </form>
+        </div>
+
+      </div>
+    </aside>
+
+    <!-- Right Content Pane -->
+    <main id="pma-content">
+      
+      <% if (message) { %>
+        <div class="pma-notice pma-notice-success">
+          <svg class="legacy-icon"><use href="#icon-tick"/></svg>
+          <span><%= message %></span>
+        </div>
+      <% } %>
+
+      <% if (error) { %>
+        <div class="pma-notice pma-notice-error">
+          <svg class="legacy-icon"><use href="#icon-delete"/></svg>
+          <span>Xəta: <%= error %></span>
+        </div>
+      <% } %>
+
+      <% if (activeTable && activeTableData) { %>
+        
+        <!-- Tab Navigation Bar -->
+        <nav class="pma-tabs">
+          <a href="/admin?table=<%= activeTable %>&tab=browse" class="pma-tab <%= activeTab === 'browse' ? 'active' : '' %>">
+            <svg class="legacy-icon"><use href="#icon-browse"/></svg>
+            <span>Gözdən Keçir</span>
+          </a>
+          <a href="/admin?table=<%= activeTable %>&tab=structure" class="pma-tab <%= activeTab === 'structure' ? 'active' : '' %>">
+            <svg class="legacy-icon"><use href="#icon-structure"/></svg>
+            <span>Struktur</span>
+          </a>
+          <a href="/admin?table=<%= activeTable %>&tab=sql" class="pma-tab <%= activeTab === 'sql' ? 'active' : '' %>">
+            <svg class="legacy-icon"><use href="#icon-sql"/></svg>
+            <span>SQL / OctoSQLX</span>
+          </a>
+          <a href="/admin?table=<%= activeTable %>&tab=insert" class="pma-tab <%= activeTab === 'insert' ? 'active' : '' %>">
+            <svg class="legacy-icon"><use href="#icon-insert"/></svg>
+            <span>Daxil Et</span>
+          </a>
+          <a href="/admin?table=<%= activeTable %>&tab=operations" class="pma-tab <%= activeTab === 'operations' ? 'active' : '' %>">
+            <svg class="legacy-icon"><use href="#icon-gear"/></svg>
+            <span>Əməliyyatlar</span>
+          </a>
+        </nav>
+
+        <!-- TAB 1: BROWSE (GÖZDƏN KEÇİR) -->
+        <% if (activeTab === 'browse') { %>
+          
+          <!-- Green Success Query Box -->
+          <div class="pma-notice pma-notice-success" style="margin-bottom: 8px;">
+            <svg class="legacy-icon"><use href="#icon-tick"/></svg>
+            <span>Göstərilən sətirlər: 0 - <%= displayRows.length - 1 %> (cəmi <%= activeTableData.records.length %>, Sorğu <%= queryTime %> saniyə çəkdi.)</span>
+          </div>
+
+          <div class="pma-query-box">
+            <span><%= executedQuery %></span>
+            <div style="font-size: 11px;">
+              <a href="/admin?table=<%= activeTable %>&tab=sql" style="color: #235a81; margin-right: 8px;">[ Redaktə Et ]</a>
+              <span style="color: #888;">[ Profil: 0.1 ms ]</span>
+            </div>
+          </div>
+
+          <!-- Rows Table -->
+          <% if (displayRows.length === 0) { %>
+            <div class="pma-notice pma-notice-info">
+              Bu cədvəldə heç bir məlumat tapılmadı (Boş cədvəl). Yeni sətir əlavə etmək üçün "Daxil Et" sekmesine keçin.
+            </div>
+          <% } else { %>
+            
+            <table class="pma-table">
+              <thead>
+                <tr>
+                  <th style="width: 28px; text-align: center;"><input type="checkbox" onclick="toggleAllCheckboxes(this)"></th>
+                  <th style="width: 140px; text-align: center;">Əməliyyatlar</th>
+                  <% Object.keys(activeTableData.schema).forEach(col => { %>
+                    <th>
+                      <a href="/admin?table=<%= activeTable %>&tab=browse&sort=<%= col %>&dir=<%= sortBy === col && sortDir === 'ASC' ? 'DESC' : 'ASC' %>" style="color: inherit;">
+                        <%= col %>
+                        <% if (sortBy === col) { %>
+                          <span><%= sortDir === 'ASC' ? '▲' : '▼' %></span>
+                        <% } %>
+                      </a>
+                    </th>
+                  <% }) %>
+                </tr>
+              </thead>
+              <tbody>
+                <% displayRows.forEach(row => { %>
+                  <% const pkVal = row[activeTableData.primaryKey]; %>
+                  <tr>
+                    <td style="text-align: center;">
+                      <input type="checkbox" class="row-checkbox" value="<%= pkVal %>">
+                    </td>
+                    <td style="text-align: center; white-space: nowrap;">
+                      <!-- Edit Button -->
+                      <a href="/admin?table=<%= activeTable %>&tab=edit&pk=<%= pkVal %>" class="pma-action-link pma-action-edit" title="Düzəliş et">
+                        <svg class="legacy-icon" style="width: 12px; height: 12px;"><use href="#icon-edit"/></svg>
+                        <span>Düzəliş et</span>
+                      </a>
+                      
+                      <!-- Delete Form -->
+                      <form action="/admin/row/delete" method="POST" style="display: inline;" onsubmit="return confirm('Bu sətri silmək istədiyinizə əminsiniz?')">
+                        <input type="hidden" name="table_name" value="<%= activeTable %>">
+                        <input type="hidden" name="pk_val" value="<%= pkVal %>">
+                        <button type="submit" class="pma-action-link pma-action-del" style="cursor: pointer;">
+                          <svg class="legacy-icon" style="width: 12px; height: 12px;"><use href="#icon-delete"/></svg>
+                          <span>Sil</span>
+                        </button>
+                      </form>
+                    </td>
+                    <% Object.keys(activeTableData.schema).forEach(col => { %>
+                      <% let val = row[col]; %>
+                      <% if (typeof val === 'object' && val !== null) val = JSON.stringify(val); %>
+                      <td style="max-width: 250px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;" title="<%= String(val) %>">
+                        <%= (val === null || val === undefined) ? '<null>' : String(val) %>
+                      </td>
+                    <% }) %>
+                  </tr>
+                <% }) %>
+              </tbody>
+            </table>
+
+            <!-- Bottom Multi-actions Toolbar -->
+            <div class="pma-bottom-bar">
+              <span>Seçilmişlərlə:</span>
+              <button type="button" class="pma-btn" onclick="alert('Seçilənlər kopyalandı')">İxrac Et</button>
+              <span style="color: #666; margin-left: auto;">Cəmi: <strong><%= activeTableData.records.length %></strong> sətir</span>
+            </div>
+
+          <% } %>
+        <% } %>
+
+        <!-- TAB 2: STRUCTURE (STRUKTUR) -->
+        <% if (activeTab === 'structure') { %>
+          <div style="font-size: 14px; font-weight: bold; margin-bottom: 10px; color: #235a81; display: flex; align-items: center; gap: 6px;">
+            <svg class="legacy-icon"><use href="#icon-structure"/></svg>
+            <span>`<%= activeTable %>` Cədvəlinin Strukturu</span>
+          </div>
+
+          <table class="pma-table">
+            <thead>
+              <tr>
+                <th style="width: 30px;">#</th>
+                <th>Sahə (Adı)</th>
+                <th>Məlumat Tipi</th>
+                <th>Əsas Açar (PK)</th>
+                <th>Saxlanma Rejimi</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% let idx = 1; %>
+              <% Object.entries(activeTableData.schema).forEach(([col, type]) => { %>
+                <tr>
+                  <td><%= idx++ %></td>
+                  <td><strong><%= col %></strong></td>
+                  <td><code><%= type %></code></td>
+                  <td>
+                    <% if (col === activeTableData.primaryKey) { %>
+                      <span style="color: #d9534f; font-weight: bold; display: inline-flex; align-items: center; gap: 4px;">
+                        <svg class="legacy-icon"><use href="#icon-key"/></svg>
+                        <span>PRIMARY KEY</span>
+                      </span>
+                    <% } else { %>
+                      <span style="color: #999;">-</span>
+                    <% } %>
+                  </td>
+                  <td>AES-256-GCM Şifrələnmiş Blok</td>
+                </tr>
+              <% }) %>
+            </tbody>
+          </table>
+
+          <div style="background: #f7f9fa; border: 1px solid #d3d3d3; padding: 10px; border-radius: 2px; font-size: 11px; margin-top: 15px;">
+            <div>Format: <strong>OctoSQL Storage Engine</strong></div>
+            <div>Şifrələmə: <strong>AES-256-GCM Authenticated Encryption</strong></div>
+            <div>Fayl: <code>data/<%= activeTable.toLowerCase() %>.osql</code></div>
+            <div>Yaradılma: <%= activeTableData.createdAt %></div>
+            <div>Son Yenilənmə: <%= activeTableData.updatedAt %></div>
+          </div>
+        <% } %>
+
+        <!-- TAB 3: SQL / OCTOSQLX CONSOLE -->
+        <% if (activeTab === 'sql') { %>
+          <div style="font-size: 14px; font-weight: bold; margin-bottom: 10px; color: #235a81; display: flex; align-items: center; gap: 6px;">
+            <svg class="legacy-icon"><use href="#icon-sql"/></svg>
+            <span>SQL və ya OctoSQLX Sorğu İcraçısı</span>
+          </div>
+
+          <!-- Snippet Shortcut Buttons -->
+          <div style="margin-bottom: 8px; display: flex; gap: 4px; flex-wrap: wrap;">
+            <button type="button" class="pma-btn" onclick="insertSnippet('SELECT * FROM <%= activeTable %> WHERE 1=1;')">SELECT *</button>
+            <button type="button" class="pma-btn" onclick="insertSnippet('INSERT INTO <%= activeTable %> () VALUES ();')">INSERT</button>
+            <button type="button" class="pma-btn" onclick="insertSnippet('UPDATE <%= activeTable %> SET  WHERE 1=1;')">UPDATE</button>
+            <button type="button" class="pma-btn" onclick="insertSnippet('DELETE FROM <%= activeTable %> WHERE 1=1;')">DELETE</button>
+            <button type="button" class="pma-btn" style="background: #eef2f8;" onclick="insertSnippet('FETCH * FROM <%= activeTable %> FILTER 1=1 SORT id ASC RANGE 10;')">FETCH (OctoSQLX)</button>
+            <button type="button" class="pma-btn" style="background: #eef2f8;" onclick="insertSnippet('MUTATE <%= activeTable %> SET  FILTER 1=1;')">MUTATE (OctoSQLX)</button>
+            <button type="button" class="pma-btn" style="background: #eef2f8;" onclick="insertSnippet('PURGE FROM <%= activeTable %> FILTER 1=1;')">PURGE (OctoSQLX)</button>
+          </div>
+
+          <form onsubmit="runAjaxQuery(event)">
+            <textarea id="sql-query-area" rows="6" class="pma-textarea" style="width: 100%; font-family: Consolas, monospace; font-size: 13px; margin-bottom: 10px;" required>SELECT * FROM <%= activeTable %> LIMIT 10;</textarea>
+            <div style="display: flex; justify-content: flex-end; gap: 8px;">
+              <button type="button" class="pma-btn" onclick="document.getElementById('sql-query-area').value = ''">Təmizlə</button>
+              <button type="submit" class="pma-btn pma-btn-primary">İcra Et (Go)</button>
+            </div>
+          </form>
+
+          <!-- Execution Dynamic Results -->
+          <div id="sql-ajax-results" style="margin-top: 15px; display: none;"></div>
+        <% } %>
+
+        <!-- TAB 4: INSERT (DAXİL ET - ELLE YÖNETİM) -->
+        <% if (activeTab === 'insert') { %>
+          <div style="font-size: 14px; font-weight: bold; margin-bottom: 10px; color: #235a81; display: flex; align-items: center; gap: 6px;">
+            <svg class="legacy-icon"><use href="#icon-insert"/></svg>
+            <span>`<%= activeTable %>` Cədvəlinə Yeni Sətir Daxil Et (Əllə Əlavə Etmə)</span>
+          </div>
+
+          <form action="/admin/row/save" method="POST">
+            <input type="hidden" name="table_name" value="<%= activeTable %>">
+            <input type="hidden" name="is_edit" value="false">
+
+            <table class="pma-table">
+              <thead>
+                <tr>
+                  <th style="width: 200px;">Sahə (Field)</th>
+                  <th style="width: 120px;">Tip (Type)</th>
+                  <th>Dəyər (Value)</th>
+                </tr>
+              </thead>
+              <tbody>
+                <% Object.entries(activeTableData.schema).forEach(([col, type]) => { %>
+                  <% const isPk = (col === activeTableData.primaryKey); %>
+                  <tr>
+                    <td>
+                      <strong><%= col %></strong>
+                      <% if (isPk) { %>
+                        <span style="font-size: 10px; color: #d9534f; margin-left: 4px;">(Avto / Əsas Açar)</span>
+                      <% } %>
+                    </td>
+                    <td><code><%= type %></code></td>
+                    <td>
+                      <% if (type === 'JSON') { %>
+                        <textarea name="<%= col %>" rows="4" class="pma-textarea" style="width: 100%; font-family: monospace;" placeholder='{"key": "value"}'></textarea>
+                      <% } else if (type === 'BOOLEAN' || type === 'BOOL') { %>
+                        <select name="<%= col %>" class="pma-select" style="width: 180px;">
+                          <option value="true">true</option>
+                          <option value="false">false</option>
+                        </select>
+                      <% } else if (type === 'INT' || type === 'INTEGER') { %>
+                        <input type="number" name="<%= col %>" class="pma-input" style="width: 220px;" placeholder="<%= isPk ? 'Avtomatik artan' : '0' %>">
+                      <% } else { %>
+                        <input type="text" name="<%= col %>" class="pma-input" style="width: 100%;" placeholder="<%= isPk && type === 'UUID' ? 'Avtomatik UUID' : '' %>">
+                      <% } %>
+                    </td>
+                  </tr>
+                <% }) %>
+              </tbody>
+            </table>
+
+            <div style="display: flex; gap: 8px;">
+              <button type="submit" class="pma-btn pma-btn-primary">Yadda Saxla (Go)</button>
+              <a href="/admin?table=<%= activeTable %>&tab=browse" class="pma-btn">Ləğv Et</a>
+            </div>
+          </form>
+        <% } %>
+
+        <!-- TAB 5: EDIT (DÜZƏLİŞ ET - ELLE DÜZENLEME) -->
+        <% if (activeTab === 'edit' && editRow) { %>
+          <div style="font-size: 14px; font-weight: bold; margin-bottom: 10px; color: #235a81; display: flex; align-items: center; gap: 6px;">
+            <svg class="legacy-icon"><use href="#icon-edit"/></svg>
+            <span>`<%= activeTable %>` Cədvəlindəki Sətri Redaktə Et (ID: <%= editRow[activeTableData.primaryKey] %>)</span>
+          </div>
+
+          <form action="/admin/row/save" method="POST">
+            <input type="hidden" name="table_name" value="<%= activeTable %>">
+            <input type="hidden" name="is_edit" value="true">
+            <input type="hidden" name="pk_val" value="<%= editRow[activeTableData.primaryKey] %>">
+
+            <table class="pma-table">
+              <thead>
+                <tr>
+                  <th style="width: 200px;">Sahə (Field)</th>
+                  <th style="width: 120px;">Tip (Type)</th>
+                  <th>Dəyər (Value)</th>
+                </tr>
+              </thead>
+              <tbody>
+                <% Object.entries(activeTableData.schema).forEach(([col, type]) => { %>
+                  <% const isPk = (col === activeTableData.primaryKey); %>
+                  <% let currentVal = editRow[col]; %>
+                  <tr>
+                    <td>
+                      <strong><%= col %></strong>
+                      <% if (isPk) { %><span style="font-size: 10px; color: #d9534f; margin-left: 4px;">(Əsas Açar)</span><% } %>
+                    </td>
+                    <td><code><%= type %></code></td>
+                    <td>
+                      <% if (type === 'JSON') { %>
+                        <textarea name="<%= col %>" rows="5" class="pma-textarea" style="width: 100%; font-family: monospace;"><%= typeof currentVal === 'object' ? JSON.stringify(currentVal, null, 2) : currentVal %></textarea>
+                      <% } else if (type === 'BOOLEAN' || type === 'BOOL') { %>
+                        <select name="<%= col %>" class="pma-select" style="width: 180px;">
+                          <option value="true" <%= (currentVal === true || currentVal === 'true' || currentVal === 1) ? 'selected' : '' %>>true</option>
+                          <option value="false" <%= (currentVal === false || currentVal === 'false' || currentVal === 0) ? 'selected' : '' %>>false</option>
+                        </select>
+                      <% } else if (type === 'INT' || type === 'INTEGER') { %>
+                        <input type="number" name="<%= col %>" value="<%= currentVal ?? '' %>" class="pma-input" style="width: 220px;" <%= isPk ? 'readonly' : '' %>>
+                      <% } else { %>
+                        <input type="text" name="<%= col %>" value="<%= currentVal ?? '' %>" class="pma-input" style="width: 100%;" <%= isPk ? 'readonly' : '' %>>
+                      <% } %>
+                    </td>
+                  </tr>
+                <% }) %>
+              </tbody>
+            </table>
+
+            <div style="display: flex; gap: 8px;">
+              <button type="submit" class="pma-btn pma-btn-primary">Dəyişiklikləri Saxla (Save)</button>
+              <a href="/admin?table=<%= activeTable %>&tab=browse" class="pma-btn">Ləğv Et</a>
+            </div>
+          </form>
+        <% } %>
+
+        <!-- TAB 6: OPERATIONS (ƏMƏLİYYATLAR) -->
+        <% if (activeTab === 'operations') { %>
+          <div style="font-size: 14px; font-weight: bold; margin-bottom: 10px; color: #235a81; display: flex; align-items: center; gap: 6px;">
+            <svg class="legacy-icon"><use href="#icon-gear"/></svg>
+            <span>`<%= activeTable %>` Cədvəl Əməliyyatları</span>
+          </div>
+
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+            
+            <!-- Truncate Box -->
+            <div style="border: 1px solid #d3d3d3; padding: 15px; background: #fafafa; border-radius: 2px;">
+              <h4 style="margin-bottom: 8px; color: #d9534f;">Cədvəli Boşalt (TRUNCATE)</h4>
+              <p style="font-size: 11px; color: #666; margin-bottom: 12px;">Bütün sətirləri birdəfəlik silir, cədvəl strukturu və sxemi saxlanılır.</p>
+              <form action="/admin/table/truncate" method="POST" onsubmit="return confirm('Bu cədvəldəki bütün sətirləri silmək istədiyinizə əminsiniz?')">
+                <input type="hidden" name="table_name" value="<%= activeTable %>">
+                <button type="submit" class="pma-btn" style="color: #d9534f; font-weight: bold;">Cədvəli Boşalt (Truncate)</button>
+              </form>
+            </div>
+
+            <!-- Drop Box -->
+            <div style="border: 1px solid #d3d3d3; padding: 15px; background: #fafafa; border-radius: 2px;">
+              <h4 style="margin-bottom: 8px; color: #c9302c;">Cədvəli Tamamilə Sil (DROP)</h4>
+              <p style="font-size: 11px; color: #666; margin-bottom: 12px;">Cədvəli və diskdəki <code>.osql</code> faylını tamamilə məhv edir.</p>
+              <form action="/admin/table/drop" method="POST" onsubmit="return confirm('DİQQƏT: `<%= activeTable %>` cədvəlini tamamilə silmək istəyirsiniz?')">
+                <input type="hidden" name="table_name" value="<%= activeTable %>">
+                <button type="submit" class="pma-btn" style="color: #c9302c; font-weight: bold;">Cədvəli Sil (Drop Table)</button>
+              </form>
+            </div>
+
+          </div>
+        <% } %>
+
+      <% } else { %>
+        <!-- Server Overview Home Screen -->
+        <div style="font-size: 16px; font-weight: bold; margin-bottom: 12px; color: #235a81; display: flex; align-items: center; gap: 8px;">
+          <svg class="legacy-icon" style="width: 20px; height: 20px;"><use href="#icon-server"/></svg>
+          <span>OctoSQL Server: 127.0.0.1:8421</span>
+        </div>
+
+        <div class="pma-notice pma-notice-info">
+          Sol naviqasiya panelindən idarə etmək istədiyiniz cədvəli seçin və ya aşağıdakı statistikaya nəzər yetirin.
+        </div>
+
+        <table class="pma-table" style="max-width: 600px;">
+          <thead>
+            <tr>
+              <th>Cədvəl Adı</th>
+              <th style="width: 100px;">Sətir Sayı</th>
+              <th style="width: 120px;">Həcm (Bayt)</th>
+              <th style="width: 100px;">Əməliyyat</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% tables.forEach(t => { %>
+              <tr>
+                <td>
+                  <span style="display: flex; align-items: center; gap: 6px;">
+                    <svg class="legacy-icon"><use href="#icon-table"/></svg>
+                    <strong><%= t.name %></strong>
+                  </span>
+                </td>
+                <td><%= t.rows %></td>
+                <td><%= t.sizeBytes %> B</td>
+                <td><a href="/admin?table=<%= t.name %>&tab=browse">Aç &rarr;</a></td>
+              </tr>
+            <% }) %>
+          </tbody>
+        </table>
+      <% } %>
+
+    </main>
+  </div>
+
+  <script>
+    function filterTables() {
+      const q = document.getElementById('nav-table-filter').value.toLowerCase().trim();
+      const items = document.querySelectorAll('#table-tree-ul li');
+      items.forEach(it => {
+        const name = it.getAttribute('data-name');
+        it.style.display = name.includes(q) ? '' : 'none';
+      });
+    }
+
+    function toggleAllCheckboxes(master) {
+      const checkboxes = document.querySelectorAll('.row-checkbox');
+      checkboxes.forEach(cb => cb.checked = master.checked);
+    }
+
+    function insertSnippet(snip) {
+      const ta = document.getElementById('sql-query-area');
+      if (ta) {
+        ta.value = snip;
+        ta.focus();
+      }
+    }
+
+    async function runAjaxQuery(e) {
+      e.preventDefault();
+      const query = document.getElementById('sql-query-area').value.trim();
+      const resultsDiv = document.getElementById('sql-ajax-results');
+      if (!query) return;
+
+      resultsDiv.style.display = 'block';
+      resultsDiv.innerHTML = '<div class="pma-notice pma-notice-info">Sorğu icra olunur...</div>';
+
+      try {
+        const resp = await fetch('/api/query', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ query })
+        });
+        const data = await resp.json();
+
+        if (!resp.ok || data.error) {
+          resultsDiv.innerHTML = `<div class="pma-notice pma-notice-error"><svg class="legacy-icon" style="margin-right: 5px;"><use href="#icon-delete"/></svg><span>Xəta: ${data.error || 'Naməlum xəta'}</span></div>`;
+          return;
+        }
+
+        const rows = data.rows || (data.record ? [data.record] : []);
+        let html = `<div class="pma-notice pma-notice-success"><svg class="legacy-icon" style="margin-right: 5px;"><use href="#icon-tick"/></svg><span>Sorğu uğurla icra olundu (${data.executionTimeMs} ms &bull; ${data.dialect.toUpperCase()}) - ${rows.length} sətir qayıtdı.</span></div>`;
+
+        if (rows.length > 0) {
+          const cols = Object.keys(rows[0]);
+          html += '<table class="pma-table"><thead><tr>';
+          cols.forEach(c => html += `<th>${c}</th>`);
+          html += '</tr></thead><tbody>';
+          rows.forEach(r => {
+            html += '<tr>';
+            cols.forEach(c => {
+              let v = r[c];
+              if (typeof v === 'object' && v !== null) v = JSON.stringify(v);
+              html += `<td>${v ?? ''}</td>`;
+            });
+            html += '</tr>';
+          });
+          html += '</tbody></table>';
+        }
+
+        resultsDiv.innerHTML = html;
+      } catch (err) {
+        resultsDiv.innerHTML = `<div class="pma-notice pma-notice-error"><svg class="legacy-icon" style="margin-right: 5px;"><use href="#icon-delete"/></svg><span>Şəbəkə xətası: ${err.message}</span></div>`;
+      }
+    }
+  </script>
+</body>
+</html>

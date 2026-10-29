@@ -1,0 +1,40 @@
+{
+  "name": "octosql",
+  "version": "1.0.0",
+  "description": "High-performance encrypted document & relational database engine with ANSI SQL & OctoSQLX dialect, Redis caching layer, and OctoAdminer workbench",
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
+  "bin": {
+    "octosql": "bin/octosql.js"
+  },
+  "scripts": {
+    "start": "node daemon.js",
+    "daemon": "node daemon.js",
+    "cli": "node bin/octosql.js",
+    "status": "node bin/octosql.js status",
+    "test": "node test.js && node test_connection.js"
+  },
+  "keywords": [
+    "database",
+    "sql",
+    "octosql",
+    "octosqlx",
+    "orm",
+    "driver",
+    "connection-pool",
+    "aes-256-gcm",
+    "redis-cache",
+    "headless",
+    "phpmyadmin",
+    "adminer"
+  ],
+  "author": "Ali Yabuz",
+  "license": "MIT",
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "dependencies": {
+    "ejs": "^3.1.10",
+    "express": "^4.19.2"
+  }
+}
